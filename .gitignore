@@ -1,0 +1,15 @@
+gitignore
+# .NET
+**/bin/
+**/obj/
+**/*.user
+
+# React
+**/node_modules/
+**/build/
+
+# Docker
+**/.env
+
+# Mac
+.DS_Store
