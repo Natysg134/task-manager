@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using TaskManager.Application.DTOs;
-using TaskManager.Application.Interfaces;
+using Application.DTOs;
+using Application.Interfaces;
 
 namespace TaskManager.API.Controllers;
 
@@ -32,10 +32,13 @@ public class TasksController : ControllerBase
       return CreatedAtAction(nameof(GetAll), new { id = task.Id }, task);
   }
 
-  [HttpPatch("{id}/toggle")]
-  public async Task<IActionResult> Toggle(int id)
+  [HttpPatch("{id}")]
+  public async Task<IActionResult> Update(int id, [FromBody] UpdateTaskDto dto)
   {
-      var task = await _taskService.ToggleTaskAsync(id);
+      if (!ModelState.IsValid)
+          return BadRequest(ModelState);
+
+      var task = await _taskService.UpdateTaskAsync(id, dto);
       return Ok(task);
       // KeyNotFoundException bubbles up to ExceptionHandlingMiddleware
   }

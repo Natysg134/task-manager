@@ -6,6 +6,6 @@ public interface ITaskService
 {
   Task<IEnumerable<TaskDto>> GetAllTasksAsync();
   Task<TaskDto> CreateTaskAsync(CreateTaskDto dto);
-  Task<TaskDto> ToggleTaskAsync(int id);
+  Task<TaskDto> UpdateTaskAsync(int id, UpdateTaskDto dto);
   Task DeleteTaskAsync(int id);
 }

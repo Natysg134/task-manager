@@ -31,12 +31,14 @@ public class TaskService : ITaskService
       return MapToDto(created);
   }
 
-  public async Task<TaskDto> ToggleTaskAsync(int id)
+  public async Task<TaskDto> UpdateTaskAsync(int id, UpdateTaskDto dto)
   {
       var task = await _repository.GetByIdAsync(id)
           ?? throw new KeyNotFoundException($"Task {id} not found.");
 
-      task.Toggle();
+      task.Title = dto.Title.Trim();
+      task.Description = dto.Description?.Trim() ?? string.Empty;
+      task.IsCompleted = dto.IsCompleted;
 
       var updated = await _repository.UpdateAsync(task);
       return MapToDto(updated);

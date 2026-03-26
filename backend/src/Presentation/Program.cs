@@ -4,7 +4,6 @@ using Application.Services;
 using Domain.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
-using Presentation.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 

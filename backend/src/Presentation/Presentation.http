@@ -1,6 +1,0 @@
-@Presentation_HostAddress = http://localhost:3000
-
-GET {{Presentation_HostAddress}}/taskmanager/
-Accept: application/json
-
-###
