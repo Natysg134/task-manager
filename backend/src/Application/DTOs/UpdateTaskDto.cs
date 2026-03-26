@@ -11,6 +11,7 @@ public class UpdateTaskDto
 
   [MaxLength(100)]
   public string? Description { get; set; }
+  public DateTime? DueAt { get; set; }
 
   public bool IsCompleted { get; set; }
 }

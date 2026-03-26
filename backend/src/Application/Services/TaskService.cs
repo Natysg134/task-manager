@@ -24,7 +24,9 @@ public class TaskService : ITaskService
   {
       var task = new TaskItem
       {
-          Title = dto.Title.Trim()
+          Title = dto.Title.Trim(),
+          Description = dto.Description?.Trim() ?? string.Empty,
+          DueAt = dto.DueAt ?? null
       };
 
       var created = await _repository.AddAsync(task);
@@ -38,6 +40,7 @@ public class TaskService : ITaskService
 
       task.Title = dto.Title.Trim();
       task.Description = dto.Description?.Trim() ?? string.Empty;
+      task.DueAt = dto.DueAt ?? null;
       task.IsCompleted = dto.IsCompleted;
 
       var updated = await _repository.UpdateAsync(task);
@@ -54,9 +57,10 @@ public class TaskService : ITaskService
 
   private static TaskDto MapToDto(TaskItem task) => new()
   {
-      Id = task.Id,
-      Title = task.Title,
-      IsCompleted = task.IsCompleted,
-      CreatedAt = task.CreatedAt
+    Id = task.Id,
+    Title = task.Title,
+    IsCompleted = task.IsCompleted,
+    CreatedAt = task.CreatedAt,
+    DueAt = task.DueAt
   };
 }
