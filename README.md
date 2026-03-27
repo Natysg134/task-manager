@@ -20,6 +20,7 @@ A full-stack task management app built with .NET 8 and React.
 
 ## Project Structure
 
+```
 task-manager/
 ├── backend/
 │   ├── TaskManager.sln
@@ -31,6 +32,7 @@ task-manager/
 ├── frontend/
 │   └── task-manager-ui/
 └── README.md
+```
 
 ---
 
@@ -59,29 +61,29 @@ The database and tables are created automatically when the backend starts via EF
 ### Update the connection string
 
 Open backend/src/Presentation/appsettings.json and set your SQL Server credentials:
-
+```
 {
 "ConnectionStrings": {
   "DefaultConnection": "Server=localhost,1433;Database=TaskManagerDB;User Id=sa;Password=YOUR_PASSWORD;TrustServerCertificate=True;"
 }
 }
-
+```
 ---
 
 ## Running the Backend
 
 ### 1. Clone the repository
-
+```
 git clone https://github.com/YOUR_USERNAME/task-manager.git
 cd task-manager
-
+```
 ### 2. Create the migration
 
 Only needed the first time:
-
+```
 cd backend/src/Presentation
 dotnet ef migrations add InitialCreate --project ../Infrastructure --startup-project .
-
+```
 ### 3. Run the API
 
 dotnet run
@@ -97,11 +99,11 @@ Swagger UI available at http://localhost:5000/swagger
 ---
 
 ## Running the Frontend
-
+```
 cd frontend/task-manager-ui
 npm install
 npm start
-
+```
 App runs at http://localhost:3000
 
 ---
@@ -148,6 +150,22 @@ Infrastructure → Domain
 
 Each layer only knows about the layers it directly depends on. The outer layers depend on the inner ones, never the other way around.
 
+## App Preview
+
+Here's a preview on how the task manager looks.
+<img width="1395" height="567" alt="Screenshot 2026-03-27 at 5 09 26 PM" src="https://github.com/user-attachments/assets/dcf6c5a8-7680-4f5b-a589-91e9d617966d" />
+
+To add a Task press the Add Task button at the top and a modal will displayed with the form to add task
+<img width="524" height="466" alt="Screenshot 2026-03-27 at 5 11 02 PM" src="https://github.com/user-attachments/assets/6f80a7d7-25a5-4645-9b48-9fc7da247095" />
+
+You can filter the tasks by status.
+<img width="1339" height="316" alt="Screenshot 2026-03-27 at 5 11 16 PM" src="https://github.com/user-attachments/assets/d45622a3-b617-43b9-b0a6-5c2719ba1650" />
+
+When all tasks are completed the badge at the top will turn green 
+<img width="330" height="89" alt="Screenshot 2026-03-27 at 5 11 27 PM" src="https://github.com/user-attachments/assets/832af571-ed22-4641-9057-8b46d1353093" />
+
+---
+
 ### Key decisions
 
 - Soft delete — records are never removed from the database. An IsDeleted flag and a global EF Core query filter handle this transparently across all queries
@@ -162,3 +180,4 @@ Each layer only knows about the layers it directly depends on. The outer layers 
 - No authentication was added, it is out of scope
 - The frontend runs on port 3000 and the backend on port 5000, CORS is configured accordingly
 - ConfigureAwait(false) was intentionally left out — ASP.NET Core has no synchronization context so it adds no value here
+
