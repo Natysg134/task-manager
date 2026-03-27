@@ -59,6 +59,7 @@ public class TaskService : ITaskService
   {
     Id = task.Id,
     Title = task.Title,
+    Description = task.Description,
     IsCompleted = task.IsCompleted,
     CreatedAt = task.CreatedAt,
     DueAt = task.DueAt
