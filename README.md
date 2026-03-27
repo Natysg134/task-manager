@@ -43,50 +43,6 @@ task-manager/
 
 ---
 
-## First Time Setup
-
-### 1. Clone the repository
-
-git clone https://github.com/YOUR_USERNAME/task-manager.git
-cd task-manager
-
-### 2. Create the solution and projects
-
-cd backend
-dotnet new sln -n TaskManager
-mkdir -p src && cd src
-
-dotnet new classlib -n Domain
-dotnet new classlib -n Application
-dotnet new classlib -n Infrastructure
-dotnet new webapi -n Presentation
-
-cd ..
-dotnet sln add src/Domain
-dotnet sln add src/Application
-dotnet sln add src/Infrastructure
-dotnet sln add src/Presentation
-
-### 3. Add project references
-
-dotnet add src/Application reference src/Domain
-dotnet add src/Infrastructure reference src/Domain
-dotnet add src/Presentation reference src/Application
-dotnet add src/Presentation reference src/Infrastructure
-
-### 4. Install NuGet packages
-
-dotnet add src/Infrastructure package Microsoft.EntityFrameworkCore.SqlServer --version 8.0.0
-dotnet add src/Infrastructure package Microsoft.EntityFrameworkCore.Tools --version 8.0.0
-dotnet add src/Presentation package Swashbuckle.AspNetCore --version 6.5.0
-
-### 5. Install frontend dependencies
-
-cd ../frontend/task-manager-ui
-npm install
-
----
-
 ## Database Setup
 
 The project uses SQL Server. You can use any running SQL Server instance.
@@ -114,14 +70,19 @@ Open backend/src/Presentation/appsettings.json and set your SQL Server credentia
 
 ## Running the Backend
 
-### 1. Create the migration
+### 1. Clone the repository
+
+git clone https://github.com/YOUR_USERNAME/task-manager.git
+cd task-manager
+
+### 2. Create the migration
 
 Only needed the first time:
 
 cd backend/src/Presentation
 dotnet ef migrations add InitialCreate --project ../Infrastructure --startup-project .
 
-### 2. Run the API
+### 3. Run the API
 
 dotnet run
 
@@ -138,6 +99,7 @@ Swagger UI available at http://localhost:5000/swagger
 ## Running the Frontend
 
 cd frontend/task-manager-ui
+npm install
 npm start
 
 App runs at http://localhost:3000
