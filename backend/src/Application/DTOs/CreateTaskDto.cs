@@ -9,8 +9,8 @@ public class CreateTaskDto
   [MaxLength(100, ErrorMessage = "Title cannot exceed 100 characters.")]
   public string Title { get; set; } = string.Empty;
 
-  [MaxLength(100, ErrorMessage = "Description cannot exceed 100 characters.")]
-  public string? Description { get; set; }
+  [MaxLength(100, ErrorMessage = "Details cannot exceed 100 characters.")]
+  public string? Details { get; set; }
 
   public DateTime? DueAt { get; set; }
 }

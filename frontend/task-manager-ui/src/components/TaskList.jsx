@@ -27,7 +27,7 @@ return (
         <tr>
           <th>Status</th>
           <th>Task Name</th>
-          <th>Description</th>
+          <th>Details</th>
           <th>Due Date</th>
           <th>Actions</th>
         </tr>

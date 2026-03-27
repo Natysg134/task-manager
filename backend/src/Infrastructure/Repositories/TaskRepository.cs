@@ -39,10 +39,11 @@ public class TaskRepository : ITaskRepository
       await _context.SaveChangesAsync();
       return task;
   }
-
   public async Task DeleteAsync(TaskItem task)
   {
-      _context.Tasks.Remove(task);
-      await _context.SaveChangesAsync();
+    // Mark as deleted instead of removing the row
+    task.Delete();
+    _context.Tasks.Update(task);
+    await _context.SaveChangesAsync();
   }
 }

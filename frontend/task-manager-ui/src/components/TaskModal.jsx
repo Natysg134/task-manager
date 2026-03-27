@@ -4,7 +4,7 @@ import { getCurrentDate } from '../helpers/getCurrentDate';
 
 function TaskModal({ task, isOpen, onSave, onEdit, onClose }) {
 const [title, setTitle]           = useState('');
-const [description, setDescription] = useState('');
+const [details, setDetails] = useState('');
 const [dueAt, setDueAt]           = useState('');
 const [loading, setLoading]       = useState(false);
 
@@ -12,7 +12,7 @@ const [loading, setLoading]       = useState(false);
 useEffect(() => {
   if (task) {
     setTitle(task.title);
-    setDescription(task.description ?? '');
+    setDetails(task.details ?? '');
     setDueAt(task.dueAt ? task.dueAt.split('T')[0] : ''); // format for date input
   }
 }, [task]);
@@ -24,11 +24,11 @@ const handleSubmit = async (e) => {
 
   try {
     setLoading(true);
-    console.log('Saving task with data:', { title: trimmed, description: description.trim() || null, dueAt: dueAt || null });
+    console.log('Saving task with data:', { title: trimmed, details: details.trim() || null, dueAt: dueAt || null });
     if (task) {
-      await onEdit(task.id, { title: trimmed, description: description.trim() || null, dueAt: dueAt || null });
+      await onEdit(task.id, { title: trimmed, details: details.trim() || null, dueAt: dueAt || null });
     } else {
-      await onSave({ title: trimmed, description: description.trim() || null, dueAt: dueAt || null });
+      await onSave({ title: trimmed, details: details.trim() || null, dueAt: dueAt || null });
     }
     onClose();
   } finally {
@@ -39,7 +39,7 @@ const handleSubmit = async (e) => {
 const handleClose = () => {
   onClose();
   setTitle('');
-  setDescription('');
+  setDetails('');
   setDueAt('');
 }
 
@@ -63,12 +63,12 @@ return (
         </Form.Group>
 
         <Form.Group>
-          <Form.Label>Description</Form.Label>
+          <Form.Label>Details</Form.Label>
           <Form.Control
             as="textarea"
             rows={3}
-            value={description}
-            onChange={e => setDescription(e.target.value)}
+            value={details}
+            onChange={e => setDetails(e.target.value)}
             disabled={loading}
             placeholder="Optional"
           />

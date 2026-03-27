@@ -36,7 +36,7 @@ const editTask = async (id, data) => {
 const toggle = async (task) => {
   await editTask(task.id, {
     title: task.title,
-    description: task.description,
+    details: task.details,
     isCompleted: !task.isCompleted,
     dueAt: task.dueAt
   });

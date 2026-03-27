@@ -52,7 +52,7 @@ return (
     )}
     <span className={isDueDate ? 'text-danger' : ''}>{task.title}</span>
   </td>
-  <td>{task.description}</td>
+  <td>{task.details}</td>
   <td>{formatDate(task.dueAt)}</td>
   <td>
     <div className="d-flex gap-2 justify-content-center">

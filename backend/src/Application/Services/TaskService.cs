@@ -25,7 +25,7 @@ public class TaskService : ITaskService
       var task = new TaskItem
       {
           Title = dto.Title.Trim(),
-          Description = dto.Description?.Trim() ?? string.Empty,
+          Details = dto.Details?.Trim() ?? string.Empty,
           DueAt = dto.DueAt ?? null
       };
 
@@ -39,7 +39,7 @@ public class TaskService : ITaskService
           ?? throw new KeyNotFoundException($"Task {id} not found.");
 
       task.Title = dto.Title.Trim();
-      task.Description = dto.Description?.Trim() ?? string.Empty;
+      task.Details = dto.Details?.Trim() ?? string.Empty;
       task.DueAt = dto.DueAt ?? null;
       task.IsCompleted = dto.IsCompleted;
 
@@ -49,7 +49,7 @@ public class TaskService : ITaskService
 
   public async Task DeleteTaskAsync(int id)
   {
-      var task = await _repository.GetByIdAsync(id)
+    var task = await _repository.GetByIdAsync(id)
           ?? throw new KeyNotFoundException($"Task {id} not found.");
 
       await _repository.DeleteAsync(task);
@@ -59,7 +59,7 @@ public class TaskService : ITaskService
   {
     Id = task.Id,
     Title = task.Title,
-    Description = task.Description,
+    Details = task.Details,
     IsCompleted = task.IsCompleted,
     CreatedAt = task.CreatedAt,
     DueAt = task.DueAt

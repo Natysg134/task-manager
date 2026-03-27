@@ -10,7 +10,8 @@ public class UpdateTaskDto
   public string Title { get; set; } = string.Empty;
 
   [MaxLength(100)]
-  public string? Description { get; set; }
+  public string? Details { get; set; }
+
   public DateTime? DueAt { get; set; }
 
   public bool IsCompleted { get; set; }
