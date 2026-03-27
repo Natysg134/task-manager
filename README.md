@@ -74,7 +74,7 @@ Open backend/src/Presentation/appsettings.json and set your SQL Server credentia
 
 ### 1. Clone the repository
 ```
-git clone https://github.com/YOUR_USERNAME/task-manager.git
+git clone https://github.com/Natysg134/task-manager.git
 cd task-manager
 ```
 ### 2. Create the migration
