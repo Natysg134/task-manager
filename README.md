@@ -64,7 +64,7 @@ Open backend/src/Presentation/appsettings.json and set your SQL Server credentia
 ```
 {
 "ConnectionStrings": {
-  "DefaultConnection": "Server=localhost,1433;Database=TaskManagerDB;User Id=sa;Password=YOUR_PASSWORD;TrustServerCertificate=True;"
+  "DefaultConnection": "Server=localhost,1433;Database=TaskManagerDB;User Id=YOUR_USER;Password=YOUR_PASSWORD;TrustServerCertificate=True;"
 }
 }
 ```
