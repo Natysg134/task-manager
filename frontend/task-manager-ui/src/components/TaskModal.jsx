@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
+import { getCurrentDate } from '../helpers/getCurrentDate';
 
-function EditTaskModal({ task, onSave, onClose }) {
+function TaskModal({ task, isOpen, onSave, onEdit, onClose }) {
 const [title, setTitle]           = useState('');
 const [description, setDescription] = useState('');
 const [dueAt, setDueAt]           = useState('');
@@ -24,23 +25,34 @@ const handleSubmit = async (e) => {
   try {
     setLoading(true);
     console.log('Saving task with data:', { title: trimmed, description: description.trim() || null, dueAt: dueAt || null });
-    await onSave(task.id, { title: trimmed, description: description.trim() || null, dueAt: dueAt || null });
+    if (task) {
+      await onEdit(task.id, { title: trimmed, description: description.trim() || null, dueAt: dueAt || null });
+    } else {
+      await onSave({ title: trimmed, description: description.trim() || null, dueAt: dueAt || null });
+    }
     onClose();
   } finally {
     setLoading(false);
   }
 };
 
+const handleClose = () => {
+  onClose();
+  setTitle('');
+  setDescription('');
+  setDueAt('');
+}
+
 return (
-  <Modal show={!!task} onHide={onClose} centered>
+  <Modal show={!!task || !!isOpen} onHide={handleClose} centered>
     <Form onSubmit={handleSubmit}>
       <Modal.Header closeButton>
-        <Modal.Title>Edit Task</Modal.Title>
+        {(task || isOpen) && <Modal.Title>{task ? 'Edit Task' : 'New Task'}</Modal.Title>}
       </Modal.Header>
 
       <Modal.Body>
         <Form.Group className="mb-3">
-          <Form.Label>Title</Form.Label>
+          <Form.Label>Title*</Form.Label>
           <Form.Control
             type="text"
             value={title}
@@ -68,6 +80,7 @@ return (
             value={dueAt}
             onChange={e => setDueAt(e.target.value)}
             disabled={loading}
+            min={getCurrentDate()}  
           />
         </Form.Group>
       </Modal.Body>
@@ -85,4 +98,4 @@ return (
 );
 }
 
-export default EditTaskModal;
+export default TaskModal;

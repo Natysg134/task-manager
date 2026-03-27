@@ -1,4 +1,4 @@
-import { ListGroup } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import TaskItem from './TaskItem';
 
 function TaskList({ tasks, filter, onToggle, onDelete, onEdit }) {
@@ -19,17 +19,28 @@ if (visible.length === 0) {
 }
 
 return (
-  <ListGroup variant="flush">
-    {visible.map(task => (
-      <TaskItem
-        key={task.id}
-        task={task}
-        onToggle={onToggle}
-        onDelete={onDelete}
-        onEdit={onEdit}
-      />
-    ))}
-  </ListGroup>
+    <Table striped bordered hover className='text-center'>
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th>Task Name</th>
+          <th>Description</th>
+          <th>Due Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      {visible.map(task => (
+        <TaskItem
+          key={task.id}
+          task={task}
+          onToggle={onToggle}
+          onDelete={onDelete}
+          onEdit={onEdit}
+        />
+      ))}
+      </tbody>
+  </Table>
 );
 }
 

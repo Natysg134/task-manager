@@ -1,69 +1,89 @@
-import { useState } from 'react';
-import { ListGroup, Form, Button } from 'react-bootstrap';
+import { useState, memo } from 'react';
+import { Form, Button, OverlayTrigger, Tooltip, Spinner } from 'react-bootstrap';
+import { formatDate } from '../helpers/formatDate';
 
 function TaskItem({ task, onToggle, onDelete, onEdit }) {
 const [busy, setBusy] = useState(false);
 
+const isDueDate = task.dueAt && new Date(task.dueAt) <= new Date();
+
+const handleEdit = () => {
+  onEdit(task);
+}
+
 const handleToggle = async () => {
   setBusy(true);
   await onToggle(task); // full task, not just id
-  setBusy(false);
+  // add a small delay to show the spinner for better UX
+  setTimeout(() => setBusy(false), 500);
 };
 
 const handleDelete = async () => {
   setBusy(true);
   await onDelete(task.id);
+  // add a small delay to show the spinner for better UX
+  setTimeout(() => setBusy(false), 500);
 };
 
 return (
-  <ListGroup.Item className={`px-0 ${busy ? 'opacity-50' : ''}`}>
-    <div className="d-flex align-items-center justify-content-between">
+  <tr className="px-0 position-relative">
+    <td>
+      <div className="d-flex align-items-center justify-content-center">
       <Form.Check
-        type="checkbox"
+        type="switch"
         id={`task-${task.id}`}
         checked={task.isCompleted}
         onChange={handleToggle}
-        disabled={busy}
-        label={
-          <span
-            onClick={handleToggle}
-            style={{
-              textDecoration: task.isCompleted ? 'line-through' : 'none',
-              color: task.isCompleted ? '#6c757d' : 'inherit',
-              cursor: 'pointer',
-            }}
-          >
-            {task.title}
-          </span>
-        }
+        disabled={false}
       />
-      <div className="d-flex gap-2">
+      {busy && 
+        <span className="position-absolute bg-black w-100 h-100 d-flex align-items-center justify-content-center" style={{ "--bs-bg-opacity": .5, top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+          <Spinner className="text-white" animation="border" size="sm"  />
+        </span>
+        }
+    </div>
+  </td>
+  <td>
+    {isDueDate && (
+      <OverlayTrigger overlay={<Tooltip id={`tooltip-${task.id}`}>Due date passed</Tooltip>}>
+        <i className='bi bi-exclamation-circle text-danger me-2'/>
+      </OverlayTrigger>
+    )}
+    <span className={isDueDate ? 'text-danger' : ''}>{task.title}</span>
+  </td>
+  <td>{task.description}</td>
+  <td>{formatDate(task.dueAt)}</td>
+  <td>
+    <div className="d-flex gap-2 justify-content-center">
+      <OverlayTrigger overlay={<Tooltip id={`tooltip-${task.id}`}>Edit</Tooltip>}>
         <Button
-          variant="link"
+          variant="primary"
           size="sm"
-          className="text-secondary p-0"
-          onClick={() => onEdit(task)}
-          disabled={busy}
+          className="text-white"
+          onClick={handleEdit}
+          disabled={false}
+          aria-label='edit'
         >
           <i className="bi bi-pencil" />
         </Button>
+      </OverlayTrigger>
+
+      <OverlayTrigger overlay={<Tooltip id={`tooltip-${task.id}`}>Delete</Tooltip>}>
         <Button
-          variant="link"
+          variant="danger"
           size="sm"
-          className="text-danger p-0"
+          className="text-white"
           onClick={handleDelete}
-          disabled={busy}
+          disabled={false}
+          aria-label='delete'
         >
           <i className="bi bi-trash" />
         </Button>
-      </div>
+      </OverlayTrigger>
     </div>
-
-    {task.description && (
-      <p className="text-muted small mb-0 mt-1 ms-4">{task.description}</p>
-    )}
-  </ListGroup.Item>
+  </td>
+</tr>
 );
 }
 
-export default TaskItem;
+export default memo(TaskItem);
