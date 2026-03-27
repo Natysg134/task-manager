@@ -85,9 +85,9 @@ cd backend/src/Presentation
 dotnet ef migrations add InitialCreate --project ../Infrastructure --startup-project .
 ```
 ### 3. Run the API
-
+```
 dotnet run
-
+```
 On startup the app will automatically:
 - Create the TaskManagerDB database if it does not exist
 - Run any pending migrations
@@ -144,9 +144,9 @@ Infrastructure → Domain
 | Layer          | Responsibility                                                                |
 |----------------|-------------------------------------------------------------------------------|
 | Domain         | Entities and repository interfaces. No external dependencies                  |
-| Application    | Business logic, services and DTOs. Depends only on Domain                    |
-| Infrastructure | EF Core implementation, SQL Server, repositories. Depends only on Domain     |
-| Presentation   | HTTP controllers and middleware. Wires everything together                    |
+| Application    | Business logic, services and DTOs. Depends only on Domain                     |
+| Infrastructure | EF Core implementation, SQL Server, repositories. Depends only on Domain      |
+| Presentation   | HTTP controllers. Wires everything together                                   |
 
 Each layer only knows about the layers it directly depends on. The outer layers depend on the inner ones, never the other way around.
 
@@ -177,7 +177,6 @@ When all tasks are completed the badge at the top will turn green
 
 - Soft delete — records are never removed from the database. An IsDeleted flag and a global EF Core query filter handle this transparently across all queries
 - Single update endpoint — toggle and edit are both handled by PUT /api/tasks/:id since they are both updates to the same resource
-- Exception handling middleware — errors are caught in one place so controllers stay clean
 - Seed data — four initial tasks are inserted on first run via EF Core HasData
 
 ---
