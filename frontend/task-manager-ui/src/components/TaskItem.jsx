@@ -1,11 +1,12 @@
 import { useState, memo } from 'react';
 import { Form, Button, OverlayTrigger, Tooltip, Spinner } from 'react-bootstrap';
 import { formatDate } from '../helpers/formatDate';
+import { getDueState } from '../helpers/getDueState';
 
 function TaskItem({ task, onToggle, onDelete, onEdit }) {
 const [busy, setBusy] = useState(false);
 
-const isDueDate = task.dueAt && new Date(task.dueAt) <= new Date();
+const isDueDate = getDueState (task);
 
 const handleEdit = () => {
   onEdit(task);
