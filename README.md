@@ -94,8 +94,8 @@ On startup the app will automatically:
 - Run any pending migrations
 - Insert seed data
 
-API runs at http://localhost:5000
-Swagger UI available at http://localhost:5000/swagger
+API runs at http://localhost:5214
+Swagger UI available at http://localhost:5214/swagger
 
 ---
 
