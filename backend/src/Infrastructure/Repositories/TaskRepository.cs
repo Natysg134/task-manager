@@ -17,6 +17,7 @@ public class TaskRepository : ITaskRepository
   public async Task<IEnumerable<TaskItem>> GetAllAsync()
   {
       return await _context.Tasks
+          .Where(t => !t.IsDeleted)
           .OrderByDescending(t => t.CreatedAt)
           .ToListAsync();
   }

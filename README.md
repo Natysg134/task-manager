@@ -178,7 +178,7 @@ When all tasks are completed the badge at the top will turn green
 
 - Soft delete — records are never removed from the database. An IsDeleted flag and a global EF Core query filter handle this transparently across all queries
 - Single update endpoint — toggle and edit are both handled by PUT /api/tasks/:id since they are both updates to the same resource
-- Seed data — four initial tasks are inserted on first run via EF Core HasData
+- Seed data — initial tasks are inserted on first run via EF Core HasData
 
 ---
 
@@ -186,5 +186,4 @@ When all tasks are completed the badge at the top will turn green
 
 - No authentication was added, it is out of scope
 - The frontend runs on port 3000 and the backend on port 5000, CORS is configured accordingly
-- ConfigureAwait(false) was intentionally left out — ASP.NET Core has no synchronization context so it adds no value here
 
