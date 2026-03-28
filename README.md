@@ -82,6 +82,7 @@ cd task-manager
 Only needed the first time:
 ```
 cd backend/src/Presentation
+dotnet restore
 dotnet ef migrations add InitialCreate --project ../Infrastructure --startup-project .
 ```
 ### 3. Run the API
